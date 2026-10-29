@@ -1,0 +1,13 @@
+[versions]
+agp = "9.2.1"
+junit = "4.13.2"
+zxingEmbedded = "4.3.0"
+zxingCore = "3.5.3"
+
+[libraries]
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+zxing-android-embedded = { group = "com.journeyapps", name = "zxing-android-embedded", version.ref = "zxingEmbedded" }
+zxing-core = { group = "com.google.zxing", name = "core", version.ref = "zxingCore" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }

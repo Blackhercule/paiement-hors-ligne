@@ -1,6 +1,11 @@
-__pycache__/
-*.pyc
-.pytest_cache/
-.venv/
-*.key
-.env
+*.iml
+.gradle/
+/local.properties
+/.idea/
+.DS_Store
+/build/
+/app/build/
+/captures
+.externalNativeBuild
+.cxx
+/app/release/

@@ -1,95 +1,131 @@
-# Paiement mobile hors ligne
+# Application mobile de paiement sans réseau
 
-> Payer et être payé par téléphone **même sans réseau**, avec une sécurité vérifiable.
-> Projet candidat au **Hackathon des Universités** – Semaine du numérique 2026 (Burkina Faso).
-> Thème : *Souveraineté technologique – accélérer la transformation digitale sécurisée et inclusive.*
+> Payer et recevoir de l'argent de téléphone à téléphone, **même quand le réseau mobile est coupé** :
+> connexion Wi-Fi directe, scan d'un QR code et échanges chiffrés en AES-256.
 
-**Statut :** prototype de preuve de concept (cryptographie + registre de synchronisation). Voir la [feuille de route](#feuille-de-route).
+Projet du **Groupe Pegasus** pour le **Hackathon des Universités**, Semaine du numérique 2026 (Burkina Faso).
+Thème : *Souveraineté technologique : accélérer la transformation digitale sécurisée et inclusive.*
+
+**Application Android native écrite en Java, Android 8.0 et plus.** Le dossier de présentation complet se trouve
+dans [`docs/`](docs/).
 
 ## Le problème
 
-Le paiement mobile suppose une connexion permanente. Or, au Burkina Faso :
-- de nombreuses zones sont mal couvertes ou en zone blanche ;
-- les coupures réseau et d'électricité sont fréquentes ;
-- des populations déplacées ou isolées sont exclues des services financiers numériques ;
-- toute la chaîne dépend d'infrastructures et de serveurs que le pays ne maîtrise pas toujours.
-
-Quand le réseau tombe, le commerce s'arrête ou retourne au cash, avec les risques de vol et d'exclusion que cela implique.
+Au Burkina Faso, le paiement mobile est devenu le principal moyen de paiement électronique, mais il s'arrête dès
+que le réseau tombe : zones blanches, antennes détruites ou inaccessibles, coupures. Sans réseau, aucun paiement
+de téléphone à téléphone n'est possible.
 
 ## La solution
 
-Un portefeuille numérique qui fonctionne en **trois temps** :
+| Étape | Téléphone B (receveur) | Téléphone A (payeur) |
+|---|---|---|
+| 1 | Ouvre « Recevoir » : crée un point d'accès Wi-Fi local et affiche un QR code | |
+| 2 | | Ouvre « Envoyer » et scanne le QR code (en face-à-face) |
+| 3 | Accepte **un seul** payeur ; toute autre connexion est refusée | Se connecte au point d'accès de B |
+| 4 | Les deux téléphones calculent la même clé de session : **ECDH P-256 → HKDF-SHA-256 → AES-256** | |
+| 5 | | Vérifie la signature de l'application, vérifie le solde, **débite**, envoie l'ordre chiffré |
+| 6 | Vérifie, **crédite**, note l'identifiant du paiement, renvoie un reçu chiffré | Passe le paiement en « confirmé » |
 
-1. **En ligne – recharge** : l'utilisateur transfère un montant plafonné de son compte vers son portefeuille hors ligne.
-2. **Hors ligne – paiement** : le payeur génère un jeton **signé cryptographiquement** (clé Ed25519 propre à son téléphone) et le transmet au commerçant par **QR code** (puis NFC / Bluetooth). Le commerçant vérifie la signature **sans réseau**.
-3. **De retour en ligne – synchronisation** : le commerçant envoie les jetons reçus au registre, qui vérifie, détecte les fraudes et crédite le compte.
+Aucun réseau mobile, aucun USSD et aucun Internet ne sont utilisés au moment du paiement.
 
-```
-   EN LIGNE            HORS LIGNE (aucun réseau)             EN LIGNE
- ┌──────────┐       ┌──────────┐   jeton signé    ┌──────────┐      ┌──────────┐
- │ Registre │──────▶│ Payeur   │────(QR/NFC)─────▶│Commerçant│─────▶│ Registre │
- │ recharge │ plafond│ wallet   │                  │ vérifie  │ sync │ contrôle │
- └──────────┘       └──────────┘                  └──────────┘      └──────────┘
-```
+## Les écrans
 
-## Sécurité : le défi du double paiement
+- **Solde** : solde disponible, masquable par des points (••••••) pour la discrétion en public.
+- **Envoyer** : scan du QR code, pavé numérique, confirmation.
+- **Recevoir** : point d'accès local, QR code, réception en direct.
+- **Historique** : toutes les opérations par jour, avec filtre et totaux.
+- **Application falsifiée** : écran de blocage si l'intégrité n'est pas vérifiée.
 
-Sans réseau, rien n'empêche techniquement de dépenser deux fois la même somme (par exemple en restaurant une sauvegarde du téléphone). Notre réponse repose sur plusieurs couches :
+## Sécurité
 
-| Menace | Contre-mesure |
-|---|---|
-| Falsification d'un paiement | Signature Ed25519 vérifiée par le commerçant et par le registre |
-| Rejeu d'un même jeton | Compteur strictement croissant ; synchronisation idempotente |
-| Double paiement (même compteur, bénéficiaires différents) | Détection au registre, **blocage du compte** fautif |
-| Dépense au-delà de ce qui a été rechargé | Le registre ne valide que dans la limite du montant alloué |
-| Perte importante en cas de fraude | **Plafond hors ligne** (20 000 FCFA dans ce prototype) |
+| Menace | Contre-mesure | Où dans le code |
+|---|---|---|
+| Écoute des échanges | AES-256-GCM, clé de session neuve à chaque paiement, effacée à la fin | `crypto/CanalChiffre`, `crypto/EchangeCles` |
+| Faux receveur (homme du milieu) | Clé publique du receveur transmise par le QR code lu en face-à-face | `reseau/InfosConnexion` |
+| Message modifié en route | GCM authentifie chaque message ; tout message altéré est rejeté | `crypto/ChiffrementAes` |
+| Message rejoué ou réordonné | Chaque message porte son sens et son numéro d'ordre (données associées GCM) | `crypto/CanalChiffre` |
+| Paiement crédité deux fois | Identifiant unique par paiement + journal anti-rejeu chez le receveur | `metier/Portefeuille` |
+| Coupure pendant un paiement | Débit avant envoi ; le paiement reste « en attente » et il est renvoyé avec le même identifiant | `reseau/SessionPayeur` |
+| Deuxième téléphone qui tente de se connecter | Le serveur du receveur n'accepte qu'un seul pair | `reseau/ServeurReception` |
+| Solde modifié sur le téléphone | Portefeuille chiffré par une clé non exportable de l'**Android Keystore** (StrongBox si disponible) ; le solde doit égaler la somme de l'historique | `stockage/CoffreSecurise` |
+| Application modifiée puis re-signée | Empreinte SHA-256 du certificat comparée à l'empreinte officielle, au démarrage et avant chaque paiement ; obfuscation R8 | `securite/VerificateurIntegrite` |
+| Sauvegarde ou transfert du portefeuille | Sauvegarde Android et transfert d'appareil désactivés | `AndroidManifest.xml` |
 
-**Limites connues (assumées) :** un double paiement n'est détecté qu'à la synchronisation, pas en temps réel. Le plafond borne donc la perte maximale. En production, la clé privée serait protégée par le matériel du téléphone (Android Keystore / Secure Enclave) pour rendre le clonage très difficile.
+**Limites connues :** comme toute monnaie électronique hors ligne, le risque principal est la double dépense par un
+téléphone compromis (rooté), car aucun serveur ne vérifie l'opération au moment où elle a lieu. Les réponses
+prévues sont dans la feuille de route : plafonds hors ligne, détection du root, synchronisation au retour du réseau.
+La clé de signature fournie (`app/cle-demo.p12`) est une **clé de démonstration** publique, pour que le jury puisse
+compiler l'application ; en production, la clé officielle reste secrète.
 
-## Pourquoi c'est un projet de souveraineté et d'inclusion
-
-- **Souveraineté** : le paiement ne dépend ni d'un opérateur étranger ni d'une connexion permanente ; le registre peut être hébergé localement.
-- **Inclusion** : zones rurales, déplacés, commerçants sans connexion stable.
-- **Sécurité** : cryptographie standard et ouverte, vérifiable par tous (code sous licence MIT).
-
-## Installation et démonstration
-
-```bash
-git clone https://github.com/TON-PSEUDO/paiement-hors-ligne.git
-cd paiement-hors-ligne
-python -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-
-python demo.py          # scénario complet avec détection de fraude
-python -m pytest -q     # tests unitaires
-```
-
-Sortie attendue de la démo : un paiement légitime synchronisé, puis un double paiement rejeté et le compte fraudeur bloqué.
-
-## Structure du dépôt
+## Organisation du code
 
 ```
-src/wallet.py    portefeuille hors ligne, signature et vérification
-src/ledger.py    registre : synchronisation, anti double-paiement, blocage
-demo.py          scénario de démonstration
-tests/           tests unitaires (fraude, plafond, falsification, rejeu)
+app/src/main/java/bf/pegasus/paiement/
+├── ui/         SoldeActivity, EnvoyerActivity, RecevoirActivity, HistoriqueActivity, FalsifieeActivity
+├── metier/     Portefeuille, Operation, Depot (modifications « tout ou rien »)
+├── reseau/     PointAcces, ConnexionWifi, ServeurReception, SessionReceveur, SessionPayeur, ProtocoleTransfert
+├── crypto/     EchangeCles (ECDH), Hkdf, ChiffrementAes, CanalChiffre
+├── stockage/   CoffreSecurise (Android Keystore)
+└── securite/   VerificateurIntegrite (signature de l'APK)
+app/src/test/java/…   41 tests unitaires (dont une vraie connexion TCP entre deux téléphones simulés)
 ```
+
+## Tester l'application
+
+### 1. Installer
+
+1. Ouvrir le dossier du projet dans **Android Studio**, puis laisser Gradle synchroniser.
+2. Brancher un téléphone Android 8.0 ou plus en USB (débogage USB activé), puis cliquer sur **Run ▶**.
+3. Faire de même avec le second téléphone. Autre méthode : *Build › Generate App Bundles or APKs › Generate APKs*,
+   puis envoyer le fichier `app-debug.apk` sur le second téléphone.
+
+Chaque téléphone démarre avec un **solde de démonstration de 50 000 FCFA**.
+
+### 2. Scénarios à vérifier
+
+| # | Scénario | Résultat attendu |
+|---|---|---|
+| 1 | B : « Recevoir ». A : « Envoyer », scanner, 2 500, Envoyer | A : 47 500, « Paiement confirmé ». B : 52 500, « Paiement reçu » |
+| 2 | Données mobiles coupées sur les deux téléphones, puis refaire 1 | Fonctionne de la même façon |
+| 3 | Un 3ᵉ téléphone scanne le même QR pendant la session | Refusé ; B affiche « Un autre téléphone a tenté de se connecter » |
+| 4 | Montant supérieur au solde | Bouton bloqué, « Solde insuffisant » |
+| 5 | Bouton œil sur l'accueil | Solde et montants remplacés par •••••• |
+| 6 | B ferme « Recevoir » juste après l'envoi de A | A : « Paiement en attente ». À la connexion suivante avec B : renvoyé et confirmé, **B n'est pas crédité deux fois** |
+| 7 | Variante falsifiée (ci-dessous) | « Application falsifiée », portefeuille bloqué |
+
+### 3. Démontrer l'écran « Application falsifiée »
+
+Dans Android Studio : *Build › Select Build Variant…*, choisir **falsifiee**, puis Run.
+Cette variante est la même application, signée avec une **autre clé** : au démarrage, l'empreinte ne correspond
+plus et l'application se bloque. Elle s'installe à côté de la version normale.
+
+### 4. Tests unitaires
+
+Dans Android Studio : clic droit sur `app/src/test/java`, puis **Run 'Tests in…'**.
+En ligne de commande : `gradlew testDebugUnitTest`.
+
+Ce qui est testé : chiffrement (dont le vecteur officiel de la RFC 5869), anti-rejeu, débit et crédit, coupure et
+renvoi, falsification du solde, faux QR code, message modifié en route, intrus refusé.
+
+Le workflow GitHub Actions (`.github/workflows/android.yml`) relance ces tests et produit les APK à chaque envoi
+sur GitHub. Les APK se téléchargent ensuite dans l'onglet **Actions** du dépôt.
 
 ## Feuille de route
 
-- [x] Cryptographie des jetons, plafond, détection de double paiement (prototype)
-- [ ] Application mobile (échange par QR code)
-- [ ] Transport NFC et Bluetooth
-- [ ] Interface USSD / SMS pour les téléphones basiques
-- [ ] Clé protégée par le matériel du téléphone
-- [ ] Interopérabilité avec les opérateurs et conformité réglementaire (BCEAO)
-- [ ] Interface vocale en mooré, dioula et fulfuldé
+- **Phase 1, hackathon (ce prototype)** : 4 écrans, QR code et point d'accès, transfert chiffré AES-256, stockage
+  sécurisé, contrôle de signature, démo sur 2 téléphones.
+- **Phase 2** : code PIN ou empreinte digitale, plafonds hors ligne, détection du root, tests sur de nombreux modèles.
+- **Phase 3** : recharge depuis un compte mobile money ou bancaire, synchronisation au retour du réseau,
+  partenariat avec un établissement agréé (BCEAO).
+- **Phase 4** : version iOS, Bluetooth et Wi-Fi Direct, interopérabilité entre opérateurs.
 
-## Équipe
+## Équipe : Groupe Pegasus
 
-- Scientifique – cybersécurité et tests d'intrusion
-- *(à compléter : coéquipiers, université/école)*
+- YE Franck Ahmed
+- KABORE Bienvenue
+- TRAORE Hussen Izedine
 
-## Licence
+## Licences
 
-MIT – voir [LICENSE](LICENSE).
+Code sous licence MIT (voir [LICENSE](LICENSE)). Police Manrope sous licence SIL Open Font License
+(voir [docs/licences/Manrope-OFL.txt](docs/licences/Manrope-OFL.txt)). Lecture des QR codes : ZXing (Apache 2.0).

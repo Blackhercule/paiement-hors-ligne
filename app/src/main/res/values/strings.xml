@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Paiement Pegasus</string>
+
+    <!-- Commun -->
+    <string name="retour">Retour</string>
+    <string name="annuler">Annuler</string>
+    <string name="enregistrer">Enregistrer</string>
+    <string name="reessayer">Réessayer</string>
+    <string name="terminer">Terminer</string>
+    <string name="fcfa">FCFA</string>
+    <string name="aes_256">AES-256</string>
+    <string name="mon_portefeuille">Mon portefeuille</string>
+    <string name="identifiant_court">ID %1$s</string>
+    <string name="aucune_operation">Aucune opération pour l\'instant.</string>
+    <string name="erreur_enregistrement">Enregistrement impossible : %1$s</string>
+    <string name="paiement_refuse">Paiement refusé par le receveur (%1$s).</string>
+    <string name="paiement_recu">Paiement reçu</string>
+
+    <!-- Accueil (solde) -->
+    <string name="bonjour">Bonjour,</string>
+    <string name="parametres">Paramètres</string>
+    <string name="solde_disponible">Solde disponible</string>
+    <string name="masquer_solde">Masquer le solde</string>
+    <string name="afficher_solde">Afficher le solde</string>
+    <string name="pret_sans_reseau">Sans réseau · prêt à payer</string>
+    <plurals name="paiements_en_attente">
+        <item quantity="one">%1$d paiement en attente</item>
+        <item quantity="many">%1$d paiements en attente</item>
+        <item quantity="other">%1$d paiements en attente</item>
+    </plurals>
+    <string name="envoyer">Envoyer</string>
+    <string name="recevoir">Recevoir</string>
+    <string name="historique">Historique</string>
+    <string name="dernieres_operations">Dernières opérations</string>
+    <string name="tout_voir">Tout voir</string>
+
+    <!-- Paramètres -->
+    <string name="bienvenue">Bienvenue !</string>
+    <string name="votre_nom">Votre nom</string>
+    <string name="nom_indice">Ex. : Awa Sawadogo</string>
+    <string name="nom_explication">Il s\'affiche chez la personne qui vous paie ou que vous payez.</string>
+    <string name="infos_appareil">Identifiant du téléphone : %1$s\nEmpreinte de l\'application : %2$s\nVersion : %3$s</string>
+
+    <!-- Envoyer -->
+    <string name="scan_titre">Scannez le QR code du receveur</string>
+    <string name="scan_explication">Le receveur ouvre « Recevoir » sur son téléphone. Votre téléphone se connecte directement au sien : aucun réseau mobile ni Internet n\'est nécessaire.</string>
+    <string name="scanner_qr">Scanner le QR code</string>
+    <string name="scanner_consigne">Placez le QR code du receveur dans le cadre</string>
+    <string name="propre_qr">C\'est le QR code de votre propre téléphone.</string>
+    <string name="permission_localisation_payeur">Sur cette version d\'Android, l\'autorisation de localisation est nécessaire pour se connecter au point d\'accès du receveur.</string>
+    <string name="connexion_a">Connexion à %1$s…</string>
+    <string name="connexion_aide">Si Android vous demande de vous connecter à l\'appareil, acceptez.</string>
+    <string name="canal_chiffre">Établissement du canal chiffré…</string>
+    <string name="receveur_injoignable">Receveur injoignable. Vérifiez que son écran « Recevoir » est toujours ouvert, puis réessayez.</string>
+    <string name="receveur_a_ferme">Le receveur a fermé la session.</string>
+    <string name="connecte_en_direct">Connecté en direct · ID %1$s</string>
+    <plurals name="paiements_renvoyes">
+        <item quantity="one">%1$d paiement en attente a été renvoyé à %2$s.</item>
+        <item quantity="many">%1$d paiements en attente ont été renvoyés à %2$s.</item>
+        <item quantity="other">%1$d paiements en attente ont été renvoyés à %2$s.</item>
+    </plurals>
+    <string name="montant_a_envoyer">Montant à envoyer</string>
+    <string name="effacer">Effacer</string>
+    <string name="saisir_montant">Saisissez un montant</string>
+    <string name="envoyer_montant">Envoyer %1$s</string>
+    <string name="solde_apres">Solde après envoi : %1$s</string>
+    <string name="solde_insuffisant">Solde insuffisant</string>
+    <string name="solde_insuffisant_detail">Solde insuffisant · disponible %1$s</string>
+    <string name="paiement_envoye">%1$s envoyés</string>
+    <string name="attente_recu">En attente du reçu du receveur…</string>
+    <string name="paiement_confirme">Paiement confirmé</string>
+    <string name="paiement_confirme_detail">%1$s a bien reçu votre paiement.</string>
+    <string name="paiement_en_attente">Paiement en attente</string>
+    <string name="paiement_en_attente_detail">Le reçu n\'est pas arrivé. Votre paiement sera renvoyé automatiquement à votre prochaine connexion avec ce receveur, et il ne sera jamais crédité deux fois.</string>
+    <string name="ancien_paiement_confirme">Paiement en attente de %1$s confirmé.</string>
+    <string name="receveur">Receveur</string>
+    <string name="nouveau_solde">Nouveau solde</string>
+    <string name="canal">Canal</string>
+    <string name="canal_valeur">Wi-Fi local · AES-256-GCM</string>
+    <string name="statut">Statut</string>
+    <string name="statut_confirme">Confirmé</string>
+    <string name="statut_en_attente">En attente</string>
+
+    <!-- Recevoir -->
+    <string name="preparation_point_acces">Création du point d\'accès…</string>
+    <string name="preparation_qr">Préparation du QR code…</string>
+    <string name="attente_payeur">En attente du payeur…</string>
+    <string name="payeur_connecte">%1$s est connecté · session verrouillée</string>
+    <string name="le_payeur">Le payeur</string>
+    <string name="de_qui">de %1$s</string>
+    <string name="paiement_deja_recu">Ce paiement était déjà reçu : il n\'est pas crédité une seconde fois.</string>
+    <string name="intrus_refuse">Un autre téléphone a tenté de se connecter : refusé.</string>
+    <string name="session_terminee">Session terminée</string>
+    <string name="session_interrompue">Session interrompue : %1$s</string>
+    <string name="nouvelle_session">Recevoir un autre paiement</string>
+    <string name="qr_description">QR code de connexion à faire scanner au payeur</string>
+    <string name="recevoir_explication">Montrez ce code au payeur. Son téléphone se connecte à votre point d\'accès : aucun réseau mobile ni Internet n\'est nécessaire.</string>
+    <string name="point_acces">Point d\'accès</string>
+    <string name="en_preparation">En préparation…</string>
+    <string name="chiffrement">Chiffrement</string>
+    <string name="chiffrement_valeur">Clé AES-256 neuve pour cette session</string>
+    <string name="securite">Sécurité</string>
+    <string name="securite_valeur">Un seul appareil peut se connecter</string>
+    <string name="fermer_session">Fermer la session</string>
+    <string name="point_acces_indisponible">Point d\'accès indisponible</string>
+    <string name="point_acces_arrete">Le point d\'accès s\'est arrêté.</string>
+    <string name="localisation_requise">Sur cette version d\'Android, la localisation doit être activée pour créer le point d\'accès local. Elle n\'est utilisée pour rien d\'autre.</string>
+    <string name="activer_localisation">Activer la localisation</string>
+    <string name="permission_localisation_receveur">L\'autorisation de localisation est nécessaire pour créer le point d\'accès local.</string>
+    <string name="permission_appareils_proches">L\'autorisation « Appareils à proximité » est nécessaire pour créer le point d\'accès local.</string>
+    <string name="erreur_session">Session impossible : %1$s</string>
+
+    <!-- Historique -->
+    <string name="total_recu">Total reçu</string>
+    <string name="total_envoye">Total envoyé</string>
+    <string name="filtre_tout">Tout</string>
+    <string name="filtre_envoyes">Envoyés</string>
+    <string name="filtre_recus">Reçus</string>
+
+    <!-- Application falsifiée -->
+    <string name="falsifiee_titre">Application falsifiée</string>
+    <string name="falsifiee_texte">La signature de cette application n\'est pas valide. Pour votre sécurité, elle a été bloquée. Téléchargez la version officielle.</string>
+    <string name="motif">Motif</string>
+    <string name="motif_inconnu">Intégrité non vérifiée</string>
+    <string name="detecte">Détecté</string>
+    <string name="empreinte">Empreinte</string>
+    <string name="illisible">illisible</string>
+    <string name="transferts">Transferts</string>
+    <string name="bloques">Bloqués</string>
+    <string name="fermer_application">Fermer l\'application</string>
+</resources>

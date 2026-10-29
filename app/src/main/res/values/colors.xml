@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Palette de la maquette : vert émeraude et or -->
+    <color name="fond">#FFF4F7F5</color>
+    <color name="surface">#FFFFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="texte">#FF0F1F1A</color>
+    <color name="texte_doux">#FF5B6B65</color>
+    <color name="texte_moyen">#FF4A5852</color>
+    <color name="vert">#FF0B6E4F</color>
+    <color name="vert_fonce">#FF07513A</color>
+    <color name="or">#FFF5C04A</color>
+    <color name="entete_doux">#FFCFE5DC</color>
+    <color name="menthe">#FFDDEFE7</color>
+    <color name="separateur">#FFEDF1EF</color>
+    <color name="segment">#FFE6ECE9</color>
+    <color name="gris_fond">#FFEEF1F0</color>
+    <color name="ambre_fond">#FFFBEFD3</color>
+    <color name="ambre_texte">#FF8A5A00</color>
+    <color name="bleu_fond">#FFE4ECF7</color>
+    <color name="bleu_texte">#FF1F4E8C</color>
+    <color name="argile_fond">#FFF6E4DD</color>
+    <color name="argile_texte">#FF9A3B1E</color>
+    <color name="rouge">#FFB42318</color>
+    <color name="rouge_fond">#FFFDECEA</color>
+    <color name="rouge_bord">#FFF6D3CF</color>
+    <color name="rouge_tres_clair">#FFFDF4F3</color>
+    <color name="desactive">#FFD5DDD9</color>
+    <color name="desactive_texte">#FF4A5852</color>
+    <color name="contour">#FFCBD6D1</color>
+</resources>

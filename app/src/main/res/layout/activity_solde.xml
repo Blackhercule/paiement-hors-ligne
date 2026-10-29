@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/racine"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fond"
+    android:orientation="vertical">
+
+    <!-- En-tête vert : nom, solde masquable, état -->
+    <LinearLayout
+        android:id="@+id/entete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_entete"
+        android:orientation="vertical"
+        android:paddingStart="20dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="20dp"
+        android:paddingBottom="22dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/avatar"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:background="@drawable/bg_carre_vert"
+                android:fontFamily="@font/manrope_extrabold"
+                android:gravity="center"
+                android:importantForAccessibility="no"
+                android:textColor="@color/or"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bonjour"
+                    android:textColor="@color/entete_doux"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/nomUtilisateur"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/manrope_bold"
+                    android:maxLines="1"
+                    android:textColor="@color/surface"
+                    android:textSize="17sp" />
+            </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/boutonParametres"
+                style="@style/BoutonIcone"
+                android:background="@drawable/bg_carre_vert"
+                android:contentDescription="@string/parametres"
+                android:src="@drawable/ic_parametres"
+                android:tint="@color/surface" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/manrope_semibold"
+            android:text="@string/solde_disponible"
+            android:textColor="@color/entete_doux"
+            android:textSize="13sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/solde"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/manrope_extrabold"
+                android:fontFeatureSettings="tnum"
+                android:letterSpacing="-0.02"
+                android:maxLines="1"
+                android:textColor="@color/surface"
+                android:textSize="34sp" />
+
+            <ImageButton
+                android:id="@+id/boutonOeil"
+                style="@style/BoutonIcone"
+                android:layout_marginStart="12dp"
+                android:background="@drawable/bg_rond_vert"
+                android:contentDescription="@string/masquer_solde"
+                android:src="@drawable/ic_oeil_barre"
+                android:tint="@color/surface" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/pastilleEtat"
+                style="@style/Texte.Pastille"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_pastille_vert"
+                android:drawableStart="@drawable/ic_wifi_off_petit"
+                android:drawablePadding="6dp"
+                android:drawableTint="@color/or"
+                android:gravity="center_vertical"
+                android:textColor="@color/or" />
+
+            <TextView
+                android:id="@+id/identifiant"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:maxLines="1"
+                android:textColor="@color/entete_doux"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Raccourcis -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingStart="12dp"
+        android:paddingTop="18dp"
+        android:paddingEnd="12dp"
+        android:paddingBottom="4dp">
+
+        <LinearLayout
+            android:id="@+id/actionEnvoyer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_action"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="6dp">
+
+            <FrameLayout
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/bg_icone_menthe">
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_fleche_envoi"
+                    android:tint="@color/vert" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/manrope_bold"
+                android:text="@string/envoyer"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/actionRecevoir"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_action"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="6dp">
+
+            <FrameLayout
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/bg_icone_ambre">
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_fleche_recu"
+                    android:tint="@color/ambre_texte" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/manrope_bold"
+                android:text="@string/recevoir"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/actionHistorique"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/bg_action"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="6dp">
+
+            <FrameLayout
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/bg_icone_bleu">
+
+                <ImageView
+                    android:layout_width="26dp"
+                    android:layout_height="26dp"
+                    android:layout_gravity="center"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_historique"
+                    android:tint="@color/bleu_texte" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/manrope_bold"
+                android:text="@string/historique"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Dernières opérations -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="12dp">
+
+        <TextView
+            style="@style/Texte.Section"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:accessibilityHeading="true"
+            android:text="@string/dernieres_operations" />
+
+        <TextView
+            android:id="@+id/toutVoir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_action"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/manrope_bold"
+            android:minHeight="44dp"
+            android:gravity="center"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="@string/tout_voir"
+            android:textColor="@color/vert"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/marge_ecran"
+        android:paddingTop="4dp"
+        android:paddingEnd="@dimen/marge_ecran"
+        android:paddingBottom="16dp">
+
+        <LinearLayout
+            android:id="@+id/listeRecente"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_carte"
+            android:orientation="vertical"
+            android:paddingStart="16dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="16dp"
+            android:paddingBottom="4dp" />
+    </ScrollView>
+</LinearLayout>

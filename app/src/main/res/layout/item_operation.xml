@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:focusable="true"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingTop="12dp"
+    android:paddingBottom="12dp">
+
+    <FrameLayout
+        android:id="@+id/rondOperation"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@drawable/bg_rond_menthe">
+
+        <ImageView
+            android:id="@+id/iconeOperation"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_fleche_recu" />
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/titreOperation"
+            style="@style/Texte"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/manrope_bold"
+            android:maxLines="1"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/detailOperation"
+            style="@style/Texte.Petit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:gravity="end"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/montantOperation"
+            style="@style/Texte"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/manrope_extrabold"
+            android:fontFeatureSettings="tnum"
+            android:maxLines="1"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/statutOperation"
+            style="@style/Texte.Pastille"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:paddingStart="8dp"
+            android:paddingTop="2dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="2dp"
+            android:textSize="11sp" />
+    </LinearLayout>
+</LinearLayout>

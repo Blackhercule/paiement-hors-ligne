@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="marge_ecran">16dp</dimen>
+    <dimen name="marge_carte_h">14dp</dimen>
+    <dimen name="bouton_hauteur">56dp</dimen>
+    <dimen name="bouton_icone">44dp</dimen>
+</resources>
